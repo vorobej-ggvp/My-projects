@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1734799774 source:c:\projects c++\lsjfnvl\main.cpp
+	<iostream>
+	<fstream>
+

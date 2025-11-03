@@ -1,0 +1,4 @@
+Kava 2 2.00
+Arbata 4 1.10
+Saldainiai 5 0.80
+Saldainiai 1 1.00

@@ -1,0 +1,9 @@
+8
+Rasa Matematika 95
+Rasa Istorija 87
+Rasa Informatika 92
+Gabija Matematika 93
+Gabija Informatika 98
+Rokas Istorija 52
+Rokas Matematika 88
+Rokas Informatika 95

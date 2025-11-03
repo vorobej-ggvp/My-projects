@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1734893504 source:c:\projects c++\string - common\main.cpp
+	<iostream>
+	<string>
+	"functions.h"
+
+1734893504 c:\projects c++\string - common\functions.h
+	<string>
+
+1734892967 source:c:\projects c++\string - common\functions.cpp
+	"functions.h"
+

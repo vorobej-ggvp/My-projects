@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1744368950 source:c:\projects\c++\iusrvhtxt\main.cpp
+	<iostream>
+	<fstream>
+

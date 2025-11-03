@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1728764227 source:c:\projects c++\for anya\main.cpp
+	<iostream>
+	<cmath>
+

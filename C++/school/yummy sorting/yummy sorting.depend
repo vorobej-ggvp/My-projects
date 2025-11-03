@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1733005518 source:c:\projects c++\yummy sorting\main.cpp
+	<iostream>
+	<locale.h>
+	<cstdlib>
+	<ctime>
+

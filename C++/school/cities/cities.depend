@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1729632171 source:c:\projects c++\cities\main.cpp
+	<iostream>
+	<fstream>
+

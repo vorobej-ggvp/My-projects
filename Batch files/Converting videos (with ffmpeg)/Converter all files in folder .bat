@@ -1,0 +1,22 @@
+@echo off
+setlocal EnableDelayedExpansion
+
+for %%f in ( *.mp4) do (
+    set "filename=%%~nxf"
+    call :process "%%f"
+)
+
+pause
+goto :eof
+
+:process
+set "filename=%~1"
+set "filename=%~nx1"
+
+echo %nameonly% | findstr /R "^[0-9][0-9]*x[0-9][0-9]*" >nul
+if %errorlevel% EQU 0 (
+    echo %nameonly% is not OK
+) else (
+    echo Converting %nameonly%
+    ffmpeg -i "%~1" -vf "scale=624:624" -y "624x624-%~nx1"
+)

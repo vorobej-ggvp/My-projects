@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1728771701 source:c:\projects c++\dance\main.cpp
+	<iostream>
+	<fstream>
+

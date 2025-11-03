@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1729450647 source:c:\projects c++\kdjff\main.cpp
+	<iostream>
+	<cmath>
+

@@ -1,0 +1,16 @@
+Klase 5a:
+Petras Rustusis     8.2 8
+Ona Balsyte         9.3 9
+Adele Luknyte       8.3 8
+Algis Berzinis      9.2 9
+
+Klase 4b:
+Jonas Juodasis      9.2 9
+Juozas Klonis       9.4 9
+
+Klase 4a:
+Zydrunas Melsvutis  8.4 8
+Jone Juodyte        9 9
+
+Maziausias vidurkis: Petras Rustusis     is 5a
+Didziausias vidurkis: Juozas Klonis       is 4b
