@@ -1,2 +1,2 @@
-# Fun-batch-files
-Here my attempts to learn something unusual which is Batch-files. Those who don;t know what that is this is scripts for Windows system usually used for automation of work with files.
+# My projects
+Here my projects. Some of them I abonded, some of them from school, some of them I learnt just for fun. Basically it shows my steps in IT field.
