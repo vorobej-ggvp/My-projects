@@ -1,1 +1,1 @@
-today.strftime("%Y")
+even
