@@ -1,8 +1,8 @@
 OrderID,Date,Product,Quantity,Price,Region,Total
-1001,2025-01-12,Laptop,2,1200.5,north,2401.0
-1002,,Mouse,10,25.0,west,250.0
-1004,2025-01-14,Monitor,1,300.0,east,300.0
-1006,,Laptop,1,1250.0,,1250.0
-1007,2025-01-16,USB-C Cable,20,8.99,south,179.8
-1009,,Keyboard,4,45.75,east,183.0
-1010,2025-01-18,Monitor,2,310.0,north,620.0
+1001,20250112,laptop,2,1200.5,north,2401.0
+1002,20251201,mouse,10,25.0,west,250.0
+1004,20250114,monitor,1,300.0,east,300.0
+1006,20250115,laptop,1,1250.0,nan,1250.0
+1007,20250116,usbc cable,20,8.99,south,179.8
+1009,20250117,keyboard,4,45.75,east,183.0
+1010,20250118,monitor,2,310.0,north,620.0

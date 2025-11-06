@@ -12,59 +12,75 @@ Cleaning data in file:
 import pandas as pd
 import logging as lg
 
-# === Configuration ===
-input_file = "file.csv"
-output_file = "clean_sales_data.csv"
-min_total = 100
-
-# === Logging setup ===
 lg.basicConfig(level=lg.INFO, format="%(levelname)s - %(message)s")
 
-# === Load data ===
-lg.info("Loading data...")
-try:
-    df = pd.read_csv(input_file)
-except FileNotFoundError:
-    lg.error("File was not found!")
-    exit()
-except pd.errors.EmptyDataError:
-    lg.error("File is empty!")
-    exit()
+class DataCleaner:
+    def __init__(self, path, output):
+        self.path = path
+        self.data = None
+        self.input_file = path
+        self.output_file = output
+        self.min_total = 100
 
-lg.info(f"File loaded successfully: {len(df)} rows")
+    def load(self):
+        lg.info("Loading data...")
+        try:
+            self.data = pd.read_csv(self.input_file)
+        except FileNotFoundError:
+            lg.info("ERROR: File was not found!")
+            return False
+        except pd.errors.EmptyDataError:
+            lg.info("ERROR: File cannot be empty!")
+            return False
 
-# === Clean data ===
-lg.info("Deleting empty values in 'Product' and 'Price'...")
-df.dropna(subset=["Product", "Price"], inplace=True)
+        lg.info(f"File was uploaded: {len(self.data)} rows")
 
-lg.info("Converting data types...")
-df["Quantity"] = pd.to_numeric(df["Quantity"], errors="coerce").fillna(0).astype(int)
-df["Price"] = pd.to_numeric(df["Price"], errors="coerce").fillna(0).astype(float)
+    def clean(self):
+        lg.info("Deleting empty values...")
+        self.data.dropna(subset=["Product", "Price"], inplace=True)
 
-lg.info("Normalizing 'Region'...")
-df["Region"] = df["Region"].str.lower()
+        self.data.fillna({"Quantity": 0}, inplace=True)
 
-lg.info("Parsing 'Date' column...")
-df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
+        self.data["Quantity"] = self.data["Quantity"].astype(int)
+        self.data["Price"] = self.data["Price"].astype(float)
 
-lg.info("Filling missing 'Quantity' values with 0...")
-df.fillna({"Quantity": 0}, inplace=True)
+        lg.info("Creating new column 'Total' = 'Quantity' * 'Price'...")
+        self.data["Total"] = self.data["Quantity"] * self.data["Price"]
 
-lg.info("Calculating 'Total' column...")
-df["Total"] = df["Quantity"] * df["Price"]
+        lg.info("Filtering 'Total' > 100'...")
+        self.data = self.data[self.data["Total"] > self.min_total]
 
-# === Filter data ===
-lg.info(f"Filtering rows where Total > {min_total}...")
-df = df[df["Total"] > min_total]
+        lg.info(f"Rows left: {len(self.data)}")
 
-lg.info(f"Rows left after filtering: {len(df)}")
+    def export(self):
+        lg.info("Saving cleaned file...")
+        try:
+            self.data.to_csv(self.output_file, index=False)
+        except:
+            lg.info("Something went wrong, file have not been created.")
+            return False
+        else:
+            lg.info("Success!")
+            return False
 
-# === Save cleaned data ===
-lg.info("Saving cleaned data...")
-try:
-    df.to_csv(output_file, index=False)
-except Exception as e:
-    lg.error(f"Saving failed: {e}")
-    exit()
-else:
-    lg.info(f"Success! Cleaned file saved as '{output_file}'")
+class CSVDataCleaner(DataCleaner):
+    def __init__(self, path, output):
+        super().__init__(path, output)
+
+    def clean(self):
+        super().clean()
+        self.normalize_text()
+
+    def normalize_text(self):
+        lg.info("Normalizing data...")
+        text_columns = self.data.select_dtypes(include=["object"]).columns
+
+        self.data["Date"] = pd.to_datetime(self.data["Date"], format="mixed")
+
+        for col in text_columns:
+            self.data[col] = self.data[col].astype(str).str.lower().str.replace(r"\s+", " ", regex=True).str.replace(r"[^\w\s]", "", regex=True).str.strip()
+
+x = CSVDataCleaner("file.csv", "clean_sales_data.csv")
+x.load()
+x.clean()
+x.export()
