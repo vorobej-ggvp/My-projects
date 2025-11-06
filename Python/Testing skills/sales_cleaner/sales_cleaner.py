@@ -11,21 +11,22 @@ Cleaning data in file:
 
 import pandas as pd
 import logging as lg
+import os
 
 lg.basicConfig(level=lg.INFO, format="%(levelname)s - %(message)s")
 
 class DataCleaner:
-    def __init__(self, path, output):
-        self.path = path
+    def __init__(self, input, output):
         self.data = None
-        self.input_file = path
-        self.output_file = output
+        self.input = input
+        self.output = output
         self.min_total = 100
 
     def load(self):
         lg.info("Loading data...")
         try:
-            self.data = pd.read_csv(self.input_file)
+            self.data = pd.read_csv(self.input, skipinitialspace=True)
+            self.data.columns = self.data.columns.str.strip()
         except FileNotFoundError:
             lg.info("ERROR: File was not found!")
             return False
@@ -55,7 +56,7 @@ class DataCleaner:
     def export(self):
         lg.info("Saving cleaned file...")
         try:
-            self.data.to_csv(self.output_file, index=False)
+            self.data.to_csv(self.output, index=False)
         except:
             lg.info("Something went wrong, file have not been created.")
             return False
@@ -64,8 +65,8 @@ class DataCleaner:
             return False
 
 class CSVDataCleaner(DataCleaner):
-    def __init__(self, path, output):
-        super().__init__(path, output)
+    def __init__(self, input, output):
+        super().__init__(input, output)
 
     def clean(self):
         super().clean()
@@ -75,12 +76,18 @@ class CSVDataCleaner(DataCleaner):
         lg.info("Normalizing data...")
         text_columns = self.data.select_dtypes(include=["object"]).columns
 
-        self.data["Date"] = pd.to_datetime(self.data["Date"], format="mixed")
+        self.data["Date"] = pd.to_datetime(self.data["Date"], errors="coerce", infer_datetime_format=True)
 
         for col in text_columns:
             self.data[col] = self.data[col].astype(str).str.lower().str.replace(r"\s+", " ", regex=True).str.replace(r"[^\w\s]", "", regex=True).str.strip()
 
-x = CSVDataCleaner("file.csv", "clean_sales_data.csv")
-x.load()
-x.clean()
-x.export()
+base_dir = os.path.dirname(__file__)
+input_path = os.path.join(base_dir, "file.csv")
+output_path = os.path.join(base_dir, "clean_sales_data.csv")
+
+x = CSVDataCleaner(input_path, output_path)
+
+if x.load():
+    x.clean()
+    x.export()
+    print(x.data.head())
