@@ -19,12 +19,13 @@ df['date'] = df['date'].ffill()
 
 df['price'] = df['price'].fillna(df['price'].mean())
 
-print(df)
 
 group_by_region = df.groupby('region')['price'].sum().reset_index()
 
-print(df.isna().sum())
-print(df.duplicated().sum())
-print(df.info())
-print()
-print(group_by_region)
+if __name__ == "__main__":
+    print(df)
+    print(df.isna().sum())
+    print(df.duplicated().sum())
+    print(df.info())
+    print()
+    print(group_by_region)
